@@ -24,7 +24,6 @@ wiki20/lib/base.py
 wiki20/lib/helpers.py
 wiki20/model/__init__.py
 wiki20/model/auth.py
-wiki20/model/page.py
 wiki20/public/favicon.ico
 wiki20/public/css/bootstrap.min.css
 wiki20/public/css/style.css
@@ -39,15 +38,13 @@ wiki20/public/javascript/bootstrap.min.js
 wiki20/templates/__init__.py
 wiki20/templates/about.xhtml
 wiki20/templates/data.xhtml
-wiki20/templates/edit.xhtml
 wiki20/templates/environ.xhtml
 wiki20/templates/error.xhtml
 wiki20/templates/index.xhtml
 wiki20/templates/login.xhtml
 wiki20/templates/master.xhtml
-wiki20/templates/page.xhtml
 wiki20/templates/template.xhtml.template
-wiki20/templates/__pycache__/__init__.cpython-310.pyc
+wiki20/templates/__pycache__/__init__.cpython-38.pyc
 wiki20/tests/__init__.py
 wiki20/tests/functional/__init__.py
 wiki20/tests/functional/test_authentication.py
