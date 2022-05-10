@@ -1,0 +1,21 @@
+<html py:extends="master.xhtml" py:strip="True">
+<head py:block="head" py:strip="True">
+    <title py:block="master_title">${wikipage.pagename} -  The TurboGears 2 Wiki</title><title>${wikipage.pagename} -  The TurboGears 2 Wiki</title>
+</head>
+
+<body py:block="body" py:strip="True">
+    <div class="main_content">
+        <div style="float:right; width: 10em;"> Viewing
+            <span py:replace="wikipage.pagename">Page Name Goes Here</span>
+            <br/>
+            You can return to the <a href="/">FrontPage</a>.
+        </div>
+
+        <div py:replace="wikipage.data">Page text goes here.</div>
+
+        <div>
+            <a href="/edit/${wikipage.pagename}">Edit this page</a>
+        </div>
+    </div>
+</body>
+</html>
