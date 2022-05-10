@@ -3,6 +3,7 @@
 
 from tg import TGController, tmpl_context
 from tg import request
+import ast
 
 
 __all__ = ['BaseController']

@@ -1,4 +1,3 @@
-
 <html py:extends="master.xhtml" py:strip="True">
 <head py:block="head" py:strip="True">
     <title>${wikipage.pagename} -  The TurboGears 2 Wiki</title>
@@ -13,6 +12,7 @@
         </div>
 
         <div py:replace="wikipage.data">Page text goes here.</div>
+
 
         <div>
             <a href="/edit/${wikipage.pagename}">Edit this page</a>

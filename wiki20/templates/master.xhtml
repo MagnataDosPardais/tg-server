@@ -8,6 +8,11 @@
   <title py:block="master_title">Your generic title goes here</title>
   <link rel="stylesheet" type="text/css" media="screen" href="${tg.url('/css/bootstrap.min.css')}" />
   <link rel="stylesheet" type="text/css" media="screen" href="${tg.url('/css/style.css')}" />
+  <style>
+    #tgdb_button{
+      display: none;
+    }
+  </style>
 
   <py:block name="head"></py:block>
 </head>
@@ -22,18 +27,15 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="${tg.url('/')}">
-        <img src="${tg.url('/img/turbogears_logo.png')}" height="20" alt="TurboGears 2"/>
-        ${getattr(tmpl_context, 'project_name', 'turbogears2')}
+      <a class="navbar-brand" href="${tg.url('/')}">Careca NEWS
+        <!--<img src="${tg.url('/img/mazza.png')}" height="20" alt="Mazza"/>
+        Careca NEWS  - ${getattr(tmpl_context, 'project_name', 'turbogears2')}-->
       </a>
     </div>
 
     <div class="collapse navbar-collapse" id="navbar-content">
       <ul class="nav navbar-nav">
-        <li class="${('', 'active')[self.defined('page') and page=='index']}"><a href="${tg.url('/')}">Welcome</a></li>
-        <li class="${('', 'active')[self.defined('page') and page=='about']}"><a href="${tg.url('/about')}">About</a></li>
-        <li class="${('', 'active')[self.defined('page') and page=='data']}"><a href="${tg.url('/data')}">Serving Data</a></li>
-        <li class="${('', 'active')[self.defined('page') and page=='environ']}"><a href="${tg.url('/environ')}">WSGI Environment</a></li>
+        <li class="${('', 'active')[self.defined('page') and page=='index']}"><a href="${tg.url('/main')}">Chat</a></li>
       </ul>
       <ul py:if="tg.auth_stack_enabled" class="nav navbar-nav navbar-right">
         <li py:if="not request.identity"><a href="${tg.url('/login')}">Login</a></li>
@@ -57,13 +59,7 @@
     <!-- Main included content -->
     <py:block name="body"></py:block>
   </div>
-
-  <!-- Footer -->
-  <footer class="footer hidden-xs hidden-sm">
-    <a class="pull-right" href="http://www.turbogears.org"><img style="vertical-align:middle;" src="${tg.url('/img/under_the_hood_blue.png')}" alt="TurboGears 2" /></a>
-    <p>Copyright &copy; ${getattr(tmpl_context, 'project_name', 'TurboGears2')} ${h.current_year()}</p>
-  </footer>
-
+  
   <script src="http://code.jquery.com/jquery.js"></script>
   <script src="${tg.url('/javascript/bootstrap.min.js')}"></script>
 </body>

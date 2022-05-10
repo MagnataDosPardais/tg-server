@@ -1,0 +1,71 @@
+<html py:extends="master.xhtml" py:strip="True">
+    <head py:block="head" py:strip="True">
+      <title py:block="master_title">Welcome to TurboGears 2.4, standing on the shoulders of giants, since 2007</title>
+      <style type="text/css">
+        body{
+          background-color: #223;
+        }
+        #main-posts{
+          background-color: #445;
+          color: #FFF;
+          margin: 0 auto;
+          margin-bottom: 4%;
+          width: 90vw;
+          height: auto;
+          border-radius: 0.5rem;
+          padding: 2%;
+        }
+        .div-post{
+          background-color: #448;
+          width: 90%;
+          margin: 0 auto;
+          margin-top: 5%;
+          padding: 2%;
+          border-radius: 0.5rem;
+          cursor: pointer;
+        }
+        #h1-title{
+          text-align: center;
+        }
+        #b-new_post{
+          font-size: 120%;
+          background-color: #AAC;
+          color: #224;
+          padding: 1%;
+          text-align: center;
+          width: 5%;
+          margin-top: 49.4vh;
+          margin-left: 85.8vw;
+          border-radius: 2rem;
+          cursor: pointer;
+          position: fixed;
+        }
+        .p-alert_user{
+          color: #FFF;
+        }
+      </style>
+    </head>
+
+    <body py:block="body" py:strip="True">
+      <p class="p-alert_user" py:if="request.identity">LOGGED WITH: ${request.identity['repoze.who.userid']}</p>
+      <p class="p-alert_user" py:if="not request.identity">UNLOGGED</p>
+      <main id="main-posts">
+        <h1 id="h1-title">Chat geral</h1>
+        <b py:if="request.identity" id="b-new_post" onclick="window.location.href = '/admin/pages/new'">+</b>
+        <div class="div-post" onclick="window.location.href = '/${x.pagename}'" py:for="x in pgData">
+          <span><b>#</b>${x.user}</span>
+          <h1>${x.pagename}</h1>
+          <p>${x.data}</p>
+          <div class="div-comments-session">
+            <h3 class="h3-comment_title">Comentários</h3>
+            <div class="div-comment">
+              <py:switch test="pgCom[x.id-1] != None">
+                <p class="p-comment_user" py:case="True" py:for="cm in pgCom[x.id-1]"><b>~$</b> ${cm}</p>
+                <i class="p-comment_user" py:case="False">Nenhum comentário atribuído</i>
+              </py:switch>
+            </div>
+          </div>
+        </div>
+      </main>
+    </body>
+</html>

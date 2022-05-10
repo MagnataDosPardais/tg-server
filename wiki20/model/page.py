@@ -1,13 +1,16 @@
 from sqlalchemy import *
 from sqlalchemy.orm import mapper, relation
 from sqlalchemy import Table, ForeignKey, Column
-from sqlalchemy.types import Integer, Text
+from sqlalchemy.types import Integer, Text, String
 
 from wiki20.model import DeclarativeBase, metadata, DBSession
+import ast
 
 class Page(DeclarativeBase):
     __tablename__ = 'page'
 
     id = Column(Integer, primary_key=True)
+    user = Column(Text)
     pagename = Column(Text, unique=True)
     data = Column(Text)
+    comm = Column(String)

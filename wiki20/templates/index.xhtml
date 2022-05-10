@@ -1,53 +1,82 @@
 <html py:extends="master.xhtml" py:strip="True">
     <head py:block="head" py:strip="True">
-        <title py:block="master_title">Welcome to TurboGears 2.4, standing on the shoulders of giants, since 2007</title>
+        <title py:block="master_title">Welcome to Careca News</title>
+        <style>
+          body{
+            background-color: #223;
+          }
+          #div-welcome{
+            background-color: #445;
+            width: 68vw;
+            height: 86vh;
+            margin: -20vh auto 4vh auto;
+            border-radius: 0.5rem;
+            opacity: 0.4;
+            -webkit-transition: opacity 0.6s;
+          }
+          @keyframes show{0%{opacity: 0.3;}100%{opacity: 1;}}
+          @keyframes unshow{100%{opacity: 0.3;}0%{opacity: 1;}}
+          #div-welcome:hover{animation: show 0.6s forwards;}
+          #div-welcome:not(:hover){animation: unshow 0.6s forwards;}
+          #h1-title{
+            color: #FFF;
+            text-align: center;
+            margin-top: 16%;
+            padding: 8% 0 0 0;
+          }
+          #p-subtitle{
+            color: #FFF;
+            text-align: center;
+            font-size: 110%;
+          }
+          #div-button_box{
+            margin-top: 16%;
+            margin-left: 18vw;
+          }
+          .button-welcome{
+            background-color: #335;
+            color: #FFF;
+            opacity: 0.8;
+            font-size: 135%;
+            height: 10vh;
+            width: 16vw;
+            border-style: solid;
+            border-radius: 3rem;
+            border-width: 0.12em;
+            border-color: #FFF;
+          }
+          @keyframes show-select{
+            0%{opacity: 0.7; background-color: #335;}
+            100%{opacity: 1; background-color: #447;}
+          }
+          @keyframes unshow-select{
+            100%{opacity: 0.7; background-color: #335;}
+            0%{opacity: 1; background-color: #447;}
+          }
+          .button-welcome:hover{
+            animation: show-select 0.6s forwards;
+          }
+          .button-welcome:not(:hover){
+            animation: unshow-select 0.6s forwards;
+          }
+          .a-init_button{
+            text-decoration: none;
+          }
+        </style>
     </head>
 
-    <body py:block="body" py:strip="True" style="background-color: #000;">
-      <div class="row">
-        <div class="col-md-8">
-          <div class="jumbotron">
-            <h1>Welcome to TurboGears 2.4</h1>
-            <p>If you see this page it means your installation was successful!</p>
-            <p>TurboGears 2 is rapid web application development toolkit designed to make your life easier.</p>
-            <p>
-              <a class="btn btn-primary btn-lg" href="http://www.turbogears.org" target="_blank">
-                ${h.icon('book')} Learn more
-              </a>
-            </p>
-          </div>
-        </div>
-        <div class="col-md-4 hidden-xs hidden-sm">
-          <a class="btn btn-info btn-sm active" href="http://turbogears.readthedocs.io/en/latest">${h.icon('book')} TG2 Documentation</a> <span class="label label-success">new</span><em> Get Started</em><br/>
-            <br/>
-          <a class="btn btn-info btn-sm active" href="http://turbogears.readthedocs.io/en/latest/cookbook/cookbook.html">${h.icon('book')} TG2 CookBook</a><em> Read the Cookbook</em> <br/>
-            <br/>
-          <a class="btn btn-info btn-sm active" href="http://groups.google.com/group/turbogears">${h.icon('comment')} Join the Mail List</a> <em>for help/discussion</em><br/>
-            <br/>
-          <a class="btn btn-info btn-sm active" href="http://runnable.com/TurboGears">${h.icon('play')} Play on Runnable</a> <em>for basic examples</em><br/>
-            <br/>
-          <a class="btn btn-info btn-sm active" href="http://stackoverflow.com/questions/tagged/turbogears2">${h.icon('search')} Search Stackoverflow</a> <em>for questions</em>
+    <body py:block="body" py:strip="True">
+      <div id="div-welcome">
+        <h1 id="h1-title">CARECA NEWS WEBSITE</h1>
+        <p id="p-subtitle">Minoxidil in Command</p>
+        <div id="div-button_box">
+          <button class="button-welcome" onclick="window.location.href = '/main'">
+            View Chat
+          </button>
+          <button class="button-welcome" onclick="window.location.href = '/login'">
+            Login
+          </button>
         </div>
       </div>
-
-      <div class="row">
-        <div class="col-md-4">
-          <h3>Code your data model</h3>
-          <p> Design your data <code>model</code>, Create the database, and Add some bootstrap data.</p>
-        </div>
-
-        <div class="col-md-4">
-          <h3>Design your URL architecture</h3>
-          <p> Decide your URLs, Program your <code>controller</code> methods, Design your
-            <code>templates</code>, and place some static files (CSS and/or Javascript). </p>
-        </div>
-
-        <div class="col-md-4">
-          <h3>Distribute your app</h3>
-          <p> Test your source, Generate project documents, Build a distribution.</p>
-        </div>
-      </div>
-
-      <em class="pull-right small"> Thank you for choosing TurboGears.</em>
     </body>
 </html>

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Main Controller"""
+import random
 
 from tg import expose, flash, require, url, lurl
 from tg import request, redirect, tmpl_context
@@ -12,10 +13,10 @@ from wiki20.model import DBSession
 from tgext.admin.tgadminconfig import BootstrapTGAdminConfig as TGAdminConfig
 from tgext.admin.controller import AdminController
 
-from wiki20.model.page import Page
-
 from wiki20.lib.base import BaseController
 from wiki20.controllers.error import ErrorController
+from wiki20.model.page import Page
+import sqlalchemy
 
 __all__ = ['RootController']
 
@@ -42,21 +43,50 @@ class RootController(BaseController):
     def _before(self, *args, **kw):
         tmpl_context.project_name = "wiki20"
 
+    @expose('wiki20.templates.index')
+    def index(self):
+        """Handle the front-page."""
+        return dict()
+    @expose('wiki20.templates.contents')
+    def main(self):
+        dto = DBSession.query(Page)
+        dtdesc = sqlalchemy.sql.expression.desc(Page.id)
+        dt = dto.order_by(dtdesc)
+        
+        dtc = []
+        for c in dt:
+            dtc.append(c.comm)
+        for i in range(0,len(dtc)):
+            try:
+                dtc[i] = dtc[i].split('§')
+            except: pass
+
+        return dict(pgData=dt,pgCom=dtc)
+
     @expose('wiki20.templates.page')
     def _default(self, pagename="FrontPage"):
         """Handle the front-page."""
         page = DBSession.query(Page).filter_by(pagename=pagename).one()
         return dict(wikipage=page)
+
     @expose(template="wiki20.templates.edit")
     def edit(self, pagename):
         page = DBSession.query(Page).filter_by(pagename=pagename).one()
         return dict(wikipage=page)
+
     @expose()
-    def save(self, pagename, data, submit):
+    def save(self, pageuser, pagename, data, submit):
+        #############################################
+        #### GET NAME OF THE EDITOR OF THE PAGE #####
+        #############################################
+        print(f"PAGE {pagename} EDITED BY {pageuser}")
         page = DBSession.query(Page).filter_by(pagename=pagename).one()
         page.data = data
+        page.user = pageuser
         redirect("/" + pagename)
-    
+
+
+
     @expose('wiki20.templates.about')
     def about(self):
         """Handle the 'about' page."""
@@ -92,13 +122,13 @@ class RootController(BaseController):
         """Start the user login."""
         if failure is not None:
             if failure == 'user-not-found':
-                flash(_('User not found'), 'error')
+                flash(_('Usuário não encontrado'), 'error')
             elif failure == 'invalid-password':
-                flash(_('Invalid Password'), 'error')
+                flash(_('Senha invalida'), 'error')
 
         login_counter = request.environ.get('repoze.who.logins', 0)
         if failure is None and login_counter > 0:
-            flash(_('Wrong credentials'), 'warning')
+            flash(_('Credenciais incorretas'), 'warning')
 
         return dict(page='login', login_counter=str(login_counter),
                     came_from=came_from, login=login)
@@ -115,7 +145,7 @@ class RootController(BaseController):
             redirect('/login',
                      params=dict(came_from=came_from, __logins=login_counter))
         userid = request.identity['repoze.who.userid']
-        flash(_('Welcome back, %s!') % userid)
+        flash(_('Salve, %s!') % userid)
 
         # Do not use tg.redirect with tg.url as it will add the mountpoint
         # of the application twice.
@@ -128,5 +158,5 @@ class RootController(BaseController):
         goodbye as well.
 
         """
-        flash(_('We hope to see you soon!'))
+        flash(_('Até mais!'))
         return HTTPFound(location=came_from)

@@ -111,7 +111,7 @@ base_config.update_blueprint({
     'auth_backend': 'sqlalchemy',
 
     # YOU MUST CHANGE THIS VALUE IN PRODUCTION TO SECURE YOUR APP
-    'sa_auth.cookie_secret': "4db18eed-b5e1-4779-8330-8841e43fdd78",
+    'sa_auth.cookie_secret': "6f9cfec2-2b00-4fac-b6a8-e5dac7e5320a",
     'sa_auth.authmetadata': ApplicationAuthMetadata(model.DBSession, model.User),
 
     # You may optionally define a page where you want users
