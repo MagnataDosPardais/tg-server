@@ -21,7 +21,7 @@
         </div>
 
         <div>
-            <a href="/edit/${wikipage.pagename}">Edit this page</a>
+            <a py:if="wikipage.user == request.identity['repoze.who.userid']" href="/edit/${wikipage.pagename}">Edit this page</a>
         </div>
     </div>
 </body>

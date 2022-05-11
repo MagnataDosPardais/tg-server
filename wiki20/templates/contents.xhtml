@@ -4,13 +4,14 @@
       <style type="text/css">
         body{
           background-color: #223;
+          margin: 0;
         }
         #main-posts{
           background-color: #445;
           color: #FFF;
-          margin: 0 auto;
-          margin-bottom: 4%;
-          width: 90vw;
+          margin-left: -5vw;
+          margin-bottom: 6%;
+          width: 70vw;
           height: auto;
           border-radius: 0.5rem;
           padding: 2%;
@@ -22,26 +23,72 @@
           margin-top: 5%;
           padding: 2%;
           border-radius: 0.5rem;
-          cursor: pointer;
         }
         #h1-title{
           text-align: center;
+          font-size: 290%;
         }
         #b-new_post{
-          font-size: 120%;
+          font-size: 320%;
           background-color: #AAC;
-          color: #224;
-          padding: 1%;
+          color: #223;
+          padding: -0.1rem;
           text-align: center;
-          width: 5%;
-          margin-top: 49.4vh;
-          margin-left: 85.8vw;
-          border-radius: 2rem;
+          height: auto;
+          width: 3.25%;
+          margin-top: 61.4vh;
+          margin-left: 67.2vw;
+          border-radius: 0.5rem;
           cursor: pointer;
           position: fixed;
         }
         .p-alert_user{
           color: #FFF;
+          font-size: 120%;
+          text-align: center;
+        }
+        .div-top_buttons{
+          display: inline-flex;
+          margin-left: 53vw;
+          margin-bottom: -5vh;
+          float: right;
+
+        }
+        .button-exclude{
+          color: #FFF;
+          background-color: #559;
+          font-size: 200%;
+          border: none;
+          border-width: 0.1em;
+          border-radius: 0.5rem;
+          width: 4rem;
+          margin-left: 4%;
+        }
+        .button-open{
+          color: #FFF;
+          background-color: #559;
+          font-size: 200%;
+          border: none;
+          border-width: 0.1em;
+          border-radius: 0.5rem;
+          width: 4rem;
+        }
+        .h3-comment_title{}
+        .button-make{
+          float: right;
+          color: #FFF;
+          background-color: #559;
+          font-size: 200%;
+          border: none;
+          border-width: 0.1em;
+          border-radius: 0.5rem;
+          width: 4rem;
+        }
+        .div-comments_session{
+          margin-top: 2vw;
+          background-color: #336;
+          border-radius: 0.5rem;
+          padding: 0.2em;
         }
       </style>
     </head>
@@ -52,17 +99,29 @@
       <main id="main-posts">
         <h1 id="h1-title">Chat geral</h1>
         <b py:if="request.identity" id="b-new_post" onclick="window.location.href = '/admin/pages/new'">+</b>
-        <div class="div-post" onclick="window.location.href = '/${x.pagename}'" py:for="x in pgData">
+        <div class="div-post" py:for="x in pgData">
+          <div class="div-top_buttons">
+            <button class="button-open" onclick="window.location.href = '/${x.pagename}'">&uarr;</button>
+            <form action="/exclude" method="post">
+              <input type="hidden" name="pagename_exclude" value="${x.pagename}"/>
+              <button class="button-exclude" type="submit" py:if="x.user == request.identity['repoze.who.userid']">x</button>
+            </form>
+          </div>
           <span><b>#</b>${x.user}</span>
           <h1>${x.pagename}</h1>
           <p>${x.data}</p>
-          <div class="div-comments-session">
+          <div class="div-comments_session">
             <h3 class="h3-comment_title">Comentários</h3>
             <div class="div-comment">
               <py:switch test="pgCom[x.id-1] != None">
-                <p class="p-comment_user" py:case="True" py:for="cm in pgCom[x.id-1]"><b>~$</b> ${cm}</p>
-                <i class="p-comment_user" py:case="False">Nenhum comentário atribuído</i>
+                <p class="p-comment_user" py:case="True" py:for="cm in pgCom[x.id-1]">&emsp;<b>~$</b> ${cm}</p>
+                <i class="p-comment_user" py:case="False">&emsp;Nenhum comentário atribuído</i>
               </py:switch>
+            <form action="/comment" method="post">
+              <input type="hidden" name="pagename_comm" value="${x.pagename}"/>
+              <textarea name="comm" rows="1" cols="115"/>
+              <button class="button-make" type="submit">&rarr;</button>
+            </form>
             </div>
           </div>
         </div>

@@ -52,7 +52,6 @@ class RootController(BaseController):
         dto = DBSession.query(Page)
         dtdesc = sqlalchemy.sql.expression.desc(Page.id)
         dt = dto.order_by(dtdesc)
-        
         dtc = []
         for c in dt:
             dtc.append(c.comm)
@@ -60,7 +59,7 @@ class RootController(BaseController):
             try:
                 dtc[i] = dtc[i].split('§')
             except: pass
-
+        dtc = list(reversed(dtc))
         return dict(pgData=dt,pgCom=dtc)
 
     @expose('wiki20.templates.page')
@@ -82,10 +81,25 @@ class RootController(BaseController):
         print(f"PAGE {pagename} EDITED BY {pageuser}")
         page = DBSession.query(Page).filter_by(pagename=pagename).one()
         page.data = data
-        page.user = pageuser
+        ###page.user = pageuser
         redirect("/" + pagename)
-
-
+    @expose()
+    def exclude(self, pagename_exclude):
+        print(f"PAGE {pagename_exclude} EXCLUDED")
+        DBSession.query(Page).filter_by(pagename=pagename_exclude).delete()
+        redirect("/main")
+    @expose()
+    def comment(self, pagename_comm, comm):
+        print(f"PAGE {pagename_comm} COMMENT ADDED")
+        page = DBSession.query(Page).filter_by(pagename=pagename_comm).one()
+        ncomm = page.comm
+        try:
+            ncomm += '§'+comm
+        except:
+            ncomm = comm
+        page.comm = ncomm
+        print(page.comm)
+        redirect("/main")
 
     @expose('wiki20.templates.about')
     def about(self):
